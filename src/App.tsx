@@ -10,6 +10,7 @@ const App: React.FC = () => {
       <Header />
       <Routes>
         <Route path="/login" element={<AuthContainer />} />
+        <Route path="/login/:code" element={<AuthContainer />} />  
         <Route path="/" element={<MainLayout />} />
       </Routes>
     </BrowserRouter>

@@ -5,7 +5,6 @@ import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import './LoginComponent.css';
 import api from '../../utils/api';
-import axios from 'axios';
 
 interface LoginState {
   loginText: string;
@@ -17,7 +16,11 @@ interface LoginState {
   errorPwdText: boolean;
 }
 
-const LoginComponent: React.FC = () => {
+interface LoginComponentProps {
+  code?: string;  
+}
+
+const LoginComponent: React.FC<LoginComponentProps> = ({ code }) => {
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -95,6 +98,7 @@ const LoginComponent: React.FC = () => {
     const user: User = {
       email: loginText,
       password: passwordText,
+      code: code || ''
     };
 
     await dispatch(loginUser(user))

@@ -8,6 +8,10 @@ import './SignUpComponent.css';
 
 interface SignUpFormInputs extends SignUp {}
 
+interface SignUpComponentProps {
+  code?: string;  
+}
+
 const validationRules = {
   email: {
     required: '이메일을 입력하세요.',
@@ -46,7 +50,7 @@ const validationRules = {
   },
 };
 
-const SignUpComponent: React.FC = () => {
+const SignUpComponent: React.FC<SignUpComponentProps> = ({ code }) => {
   
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
@@ -82,8 +86,12 @@ const SignUpComponent: React.FC = () => {
 
   const onSubmit: SubmitHandler<SignUpFormInputs> = async (data) => {
     try {
-      console.log(1232141,data)
-      await dispatch(registerUser(data));
+
+      const signUpData = {
+        ...data,
+        code,  // 코드도 함께 전송
+      };
+      await dispatch(registerUser(signUpData));
       navigate('/');
     } catch (error) {
       console.error('회원가입 실패:', error);
