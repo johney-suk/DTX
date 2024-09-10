@@ -1,0 +1,26 @@
+/* AuthContainer.css */
+
+.auth-toggle-button {
+    background-color: #5bc0de; /* 웹사이트의 테마 컬러에 맞게 조정 */
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-align: center;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .auth-toggle-button:hover {
+    background-color: #46a8c7; /* 호버 시 색상 */
+  }
+  
+  
+  .auth-toggle-button-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+  }
+  
