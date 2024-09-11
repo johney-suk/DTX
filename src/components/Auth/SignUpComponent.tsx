@@ -3,7 +3,8 @@ import { useForm, SubmitHandler, Controller } from 'react-hook-form';
 import { useAppDispatch } from '../../hooks/useAppDispatch';
 import { useNavigate } from 'react-router-dom';
 import { registerUser } from '../../store/actions/user';
-import { SignUp, Hospital, hospitalEmailFormats } from '../../store/types/SignUp';
+import { SignUp } from '../../store/types/SignUp';
+import { Hospital, hospitalOptions, hospitalEmailFormats } from '../../store/types/Hospital';
 import './SignUpComponent.css';
 
 interface SignUpFormInputs extends SignUp {}
@@ -77,7 +78,6 @@ const SignUpComponent: React.FC<SignUpComponentProps> = ({ code }) => {
     }
   };
 
-  // 이메일 앞부분 변경 시 처리
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const emailPrefix = e.target.value.split('@')[0];
     setEmailPrefix(emailPrefix);
@@ -86,10 +86,9 @@ const SignUpComponent: React.FC<SignUpComponentProps> = ({ code }) => {
 
   const onSubmit: SubmitHandler<SignUpFormInputs> = async (data) => {
     try {
-
       const signUpData = {
         ...data,
-        code,  // 코드도 함께 전송
+        code,  
       };
       await dispatch(registerUser(signUpData));
       navigate('/');
@@ -117,9 +116,9 @@ const SignUpComponent: React.FC<SignUpComponentProps> = ({ code }) => {
                 }}
               >
                 <option value="">병원 선택</option>
-                {Object.values(Hospital).map((hospital) => (
-                  <option key={hospital} value={hospital}>
-                    {hospital}
+                {hospitalOptions.map((hospital) => (
+                  <option key={hospital.code} value={hospital.code}>
+                    {hospital.name}
                   </option>
                 ))}
               </select>
@@ -133,13 +132,13 @@ const SignUpComponent: React.FC<SignUpComponentProps> = ({ code }) => {
           <div className="email-container">
             <input
               type="text"
-              {...register('email', validationRules.email)}  
+              
               value={emailPrefix}
               disabled={!isHospitalSelected}  
               onChange={handleEmailChange}  
               placeholder="이메일을 입력하세요"
             />
-            <span>{emailFormat}</span>
+            <span {...register('email', validationRules.email)}  >{emailFormat}</span>
           </div>
           {errors.email && <p className="error-message">{errors.email.message}</p>}
         </div>
